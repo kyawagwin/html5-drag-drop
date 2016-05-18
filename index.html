@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      body, html {
+        background-color: #CCFFCC;
+        font-family: sans-serif;
+        color: #330033;
+        text-align: center;
+      }
+      [draggable] {
+        user-select: none;
+      }
+      ul {
+        margin: auto;
+        width: 20%;
+        text-align: center;
+      }
+      li {
+        list-style-type: none;
+        padding: 5px;
+        margin: 2px;
+        background-color: #CCCCFF;
+        border: 2px double #CCCCCC;
+      }
+    </style>
+    <script type="text/javascript">
+      var source;
+
+      function dragStarted(evt) {
+        //start drag
+        source = evt.target;
+
+        console.log(evt);
+
+        //set data
+        evt.dataTransfer.setData("text/plain", evt.target.innerHTML);
+        //specify allowed transfer
+        evt.dataTransfer.effectAllowed = "move";
+      }
+      function draggingOver(evt) {
+        //drag over
+        evt.preventDefault();
+        //specify operation
+        evt.dataTransfer.dropEffect = "move";
+      }
+      function dropped(evt) {
+        evt.preventDefault();
+        evt.stopPropagation();
+        //update text in dragged item
+        source.innerHTML = evt.target.innerHTML;
+        //update text in drop target
+        evt.target.innerHTML = evt.dataTransfer.getData("text/plain");
+      }
+    </script>
+  </head>
+  <body>
+    <p>
+      sort these items into your order of preferences:
+    </p>
+    <ul>
+      <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">Apple</li>
+      <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">Orange</li>
+      <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">Banana</li>
+      <li draggable="true" ondragstart="dragStarted(event)" ondragover="draggingOver(event)" ondrop="dropped(event)">Strawberry</li>
+    </ul>
+  </body>
+</html>
